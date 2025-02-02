@@ -81,10 +81,8 @@ client.on(Events.MessageCreate, async (msg) => {
       chunkResponse(response).forEach((chunk) => {
         msg.reply(chunk);
       });
-      // msg.reply(response);
     }
   }
 });
 
-// this line must be at the very end
-client.login(process.env.TOKEN); // signs the bot in with token
+client.login(process.env.TOKEN);
