@@ -1,6 +1,6 @@
 # Ollama-Discord-Bot
 
-Discord Bot that uses Ollama as a chatbot.
+A simple Discord Bot that uses Ollama as a chatbot.
 
 ## Requirements
 
