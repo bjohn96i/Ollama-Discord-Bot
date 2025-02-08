@@ -1,7 +1,13 @@
 import dotenv from "dotenv";
 import axios from "axios";
 import { Logger, LogLevel } from "meklog";
-import { Client, Events, GatewayIntentBits, Partials, cleanContent } from "discord.js";
+import {
+  Client,
+  Events,
+  GatewayIntentBits,
+  Partials,
+  cleanContent,
+} from "discord.js";
 
 dotenv.config();
 
@@ -30,7 +36,7 @@ async function makeRequest(method, path, data) {
   };
   return await axios(config)
     .then(function (response) {
-      const reply = response.data.output
+      const reply = response.data[0].output;
       log(LogLevel.Info, `Reply: ${reply}`);
       return reply;
     })
@@ -50,20 +56,19 @@ client.on("ready", async () => {
 client.on(Events.MessageCreate, async (msg) => {
   log(LogLevel.Info, `Message Sent: ${msg.content}`);
   if (msg.mentions.has(client.user.id)) {
-    let query = cleanContent(msg.content, msg)
-    query = query.replace("DeepSeek-Bot", "")
-
+    let query = cleanContent(msg.content, msg);
+    query = query.replace(`@${process.env.BOTNAME}`, "");
     log(LogLevel.Info, `Message Recieved: ${msg.content}`);
 
-      let data = {
-        "session_id": client.user.id,
-        "chatInput": query
+    let data = {
+      session_id: client.user.id,
+      chatInput: query,
     };
-      let response = await makeRequest("post", "/webhook/message", data);
-      chunkResponse(response).forEach((chunk) => {
-        msg.reply(chunk);
-      });
-    }
+    let response = await makeRequest("post", "/webhook/message", data);
+    chunkResponse(response).forEach((chunk) => {
+      msg.reply(chunk);
+    });
+  }
   // }
 });
 
