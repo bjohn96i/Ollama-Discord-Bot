@@ -1,0 +1,14 @@
+# Discord bot configuration
+discord:
+  token: TOKEN_HERE
+  bot_id: ID_HERE
+  bot_name: BOT_NAME_HERE
+  channels: CHANNEL_ID_HERE
+
+# Ollama configuration
+ollama:
+  url: http://localhost:11434
+  model: deepseek-r1:8b
+
+n8n:
+  url: http://localhost:5678
